@@ -11,7 +11,6 @@ form.addEventListener('submit', async function (e) {
   appendMessage('user', userMessage);
   input.value = '';
 
-  // Tampilkan pesan "thinking" yang akan diperbarui nanti
   const thinkingMsgElement = appendMessage('bot', 'Gemini is thinking...');
 
   try {
@@ -29,14 +28,11 @@ form.addEventListener('submit', async function (e) {
     }
 
     const data = await response.json();
-    // Perbarui pesan "thinking..." dengan balasan dari bot
     thinkingMsgElement.textContent = data.reply;
   } catch (error) {
     console.error('Error:', error);
-    // Perbarui pesan "thinking..." dengan pesan error
     thinkingMsgElement.textContent = 'Sorry, something went wrong. Please try again.';
   } finally {
-    // Scroll ke bawah untuk menampilkan pesan baru
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 });
@@ -47,5 +43,5 @@ function appendMessage(sender, text) {
   msg.textContent = text;
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
-  return msg; // Kembalikan elemen pesan
+  return msg;
 }
