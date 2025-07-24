@@ -5,34 +5,34 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 dotenv.config();
 
-const app = express(); // Initialize Express app
-const port = process.env.PORT || 3000; // Set port from environment variable or default to 3000
+const app = express(); 
+const port = process.env.PORT || 3000; 
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.static('public')); // Serve static files from 'public' directory
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(cors()); 
+app.use(express.json()); 
+app.use(express.static('public')); 
+app.use(express.urlencoded({ extended: true }));
 
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // Initialize Google Generative AI
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' }); // Get the generative model
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); 
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // Routing
 app.post('/api/chat', async (req, res) => {
   try {
     console.log(req.body);
-    const { userMessage } = req.body; // Ambil field 'input' dari request body
+    const { userMessage } = req.body;
 
     if (!userMessage) {
       return res.status(400).json({ reply: 'Message is required' });
     }
 
-    const result = await model.generateContent(userMessage); // Generate content from model
+    const result = await model.generateContent(userMessage); 
     const response = result.response;
-    const text = response.text(); // Convert response to text
+    const text = response.text(); 
 
-    res.status(200).json({ reply: text }); // Kirim hasil ke client
+    res.status(200).json({ reply: text }); 
   } catch (error) {
     console.error('Error generating content:', error);
     res.status(500).json({ reply: 'Error generating content' });
