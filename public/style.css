@@ -35,7 +35,7 @@ h1 {
   border-radius: 20px;
   max-width: 80%;
   display: inline-block;
-  clear: both; /* Memastikan setiap pesan ada di baris baru */
+  clear: both;
 }
 
 .message.user {
